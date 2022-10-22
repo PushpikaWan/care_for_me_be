@@ -12,7 +12,7 @@ require('./authorization/firebase-admin');
 const posts = require("./services/posts");
 const common = require("./util/common");
 
-const PORT = process.env.PORT || 5000;
+const PORT = parseInt(process.env.PORT) || 8080;
 const app = express();
 
 app.use(
