@@ -1,8 +1,7 @@
-import {
-  animalNeedAdopt,
-  animalNeedFeed,
-  animalNeedHeal, animalNeedLost
-} from "../client/src/utils/constants";
+const animalNeedAdopt = 'Adopt';
+const animalNeedHeal = 'Heal';
+const animalNeedFeed = 'Feed';
+const animalNeedLost = 'Lost';
 
 module.exports.getErrorResponse = (status, errorMessage) => {
   console.error(status, errorMessage);
