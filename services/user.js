@@ -22,11 +22,10 @@ module.exports.saveUser = async (options) => {
     const user = {...options.body, status: STATE_ACTIVE};
     const response = await userCollection.insertOne(
         common.getPreProcessedDataBeforeSave(user));
-
     const insertedUser = await this.getUser({userId: response.insertedId})
     return {
       status: 201,
-      data: convertIdBeforeSendingObject(insertedUser.data)
+      data: insertedUser.data
     };
   } catch (e) {
     return common.getErrorResponse(500, e);
