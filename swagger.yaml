@@ -1,0 +1,762 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Care for Me APIs
+  description: Care for Me APIs spec
+paths:
+  '/user':
+    post:
+      operationId: saveUser
+      tags:
+        - user
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+
+      responses:
+        '201':
+          description: post saved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  '/user/{userId}':
+    get:
+      operationId: getUser
+      tags:
+        - user
+      parameters:
+        - name: userId
+          in: path
+          description: user id
+          required: true
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: A successful response with user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+        '204':
+          description: No matching User found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    put:
+      operationId: editUser
+      tags:
+        - user
+      parameters:
+        - name: userId
+          in: path
+          description: user id
+          required: true
+          schema:
+            type: string
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+
+      responses:
+        '201':
+          description: post saved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  '/posts':
+    get:
+      operationId: getAllPosts
+      tags:
+        - post
+      parameters:
+        - in: query
+          name: pageSize
+          required: true
+          schema:
+            type: integer
+          description: The number of post per page
+        - in: query
+          name: page
+          required: true
+          schema:
+            type: integer
+          description: Current page number
+
+
+      responses:
+        '200':
+          description: A successful response with all posts
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: '#/components/schemas/Post'
+
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+
+    post:
+      operationId: savePost
+      tags:
+        - post
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Post'
+
+      responses:
+        '201':
+          description: post saved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  '/posts/{postId}':
+    get:
+      operationId: getPost
+      tags:
+        - post
+      parameters:
+        - name: postId
+          in: path
+          description: post id
+          required: true
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: A successful response with post
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+
+        '204':
+          description: No matching Post found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    put:
+      operationId: updatePost
+      tags:
+        - post
+      parameters:
+        - name: postId
+          in: path
+          description: post id
+          required: true
+          schema:
+            type: string
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Post'
+
+      responses:
+        '201':
+          description: Post updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+
+        '204':
+          description: No matching Post found for given data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    delete:
+      operationId: deletePost
+      tags:
+        - post
+      parameters:
+        - name: postId
+          in: path
+          description: post id
+          required: true
+          schema:
+            type: string
+
+      responses:
+        '201':
+          description: Post deleted successfully
+          content:
+            application/json:
+              schema:
+                type: string
+
+        '204':
+          description: No matching Post found for given data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  '/posts/{postId}/comment':
+
+    post:
+      operationId: addComment
+      tags:
+        - post
+      parameters:
+        - name: postId
+          in: path
+          description: post id
+          required: true
+          schema:
+            type: string
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comment'
+
+      responses:
+        '201':
+          description: Comment added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  '/posts/{postId}/comment/{commentId}':
+    delete:
+      operationId: deleteComment
+      tags:
+        - post
+      parameters:
+        - name: postId
+          in: path
+          description: post id
+          required: true
+          schema:
+            type: string
+        - name: commentId
+          in: path
+          description: comment id
+          required: true
+          schema:
+            type: string
+
+      responses:
+        '201':
+          description: Comment deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+
+        '204':
+          description: No matching Post found for given data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  '/posts/{postId}/report':
+
+    post:
+      operationId: reportPost
+      tags:
+        - post
+      parameters:
+        - name: postId
+          in: path
+          description: post id
+          required: true
+          schema:
+            type: string
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Report'
+
+      responses:
+        '201':
+          description: Report added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  '/posts/{postId}/comment/{commentId}/report':
+
+    post:
+      operationId: reportComment
+      tags:
+        - post
+      parameters:
+        - name: postId
+          in: path
+          description: post id
+          required: true
+          schema:
+            type: string
+        - name: commentId
+          in: path
+          description: comment id
+          required: true
+          schema:
+            type: string
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Report'
+
+      responses:
+        '201':
+          description: Report added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  '/posts/user/{userId}':
+    get:
+      operationId: getPostsByUser
+      tags:
+        - post
+      parameters:
+        - name: userId
+          in: path
+          description: user id
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: includeInteraction
+          required: true
+          schema:
+            type: boolean
+          description: Whether include user interacted post or not
+        - in: query
+          name: pageSize
+          required: true
+          schema:
+            type: integer
+          description: The number of post per page
+        - in: query
+          name: page
+          required: true
+          schema:
+            type: integer
+          description: Current page number
+
+      responses:
+        '200':
+          description: A successful response with all posts related to user
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: '#/components/schemas/Post'
+
+        '204':
+          description: No matching Post found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  '/metadata/user/{userId}/posts':
+    get:
+      operationId: getUserPostMetaData
+      tags:
+        - post
+        - user
+        - meta
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+          description: User Id
+
+      responses:
+        '200':
+          description: A successful response wih user and post meta data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetaDataUser'
+
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  '/metadata/application':
+    get:
+      operationId: getApplicationMetaData
+      tags:
+        - meta
+
+      responses:
+        '200':
+          description: A successful response wih application meta data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetaDataApplication'
+
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    Post:
+      type: "object"
+      required:
+        - id
+        - userLite
+        - imageUrl
+        - animalType
+        - animalNeed
+        - district
+        - addressText
+        - locationLink
+        - description
+        - createdAt
+        - modifiedAt
+        - comments
+        - reports
+      properties:
+        id:
+          type: string
+        userLite:
+          $ref: '#/components/schemas/UserLite'
+        imageUrl:
+          type: string
+        animalType:
+          type: string
+        animalNeed:
+          type: string
+        district:
+          type: string
+        addressText:
+          type: string
+          maxLength: 200
+        locationLink:
+          type: string
+        description:
+          type: string
+          maxLength: 700
+        createdAt:
+          type: string
+        modifiedAt:
+          type: string
+        status:
+          type: string
+        comments:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/Comment"
+        reports:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/Report"
+
+    User:
+      type: "object"
+      required:
+        - id
+        - googleId
+        - emailAddress
+        - name
+        - imageUrl
+        - modifiedAt
+      properties:
+        id:
+          type: string
+        googleId:
+          type: string
+          minLength: 5
+        emailAddress:
+          type: string
+          minLength: 5
+        name:
+          type: string
+          minLength: 1
+        imageUrl:
+          type: string
+        modifiedAt:
+          type: string
+        status:
+          type: string
+
+    UserLite:
+      type: "object"
+      required:
+        - userId
+        - userName
+        - userImageUrl
+      properties:
+        userId:
+          type: string
+        userName:
+          type: string
+        userImageUrl:
+          type: string
+
+    Comment:
+      type: "object"
+      required:
+        - id
+        - userLite
+        - text
+        - postedAt
+        - reports
+      properties:
+        id:
+          type: string
+        userLite:
+          $ref: '#/components/schemas/UserLite'
+        text:
+          type: string
+        postedAt:
+          type: string
+        reports:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/Report"
+
+    MetaDataUser:
+      type: "object"
+      required:
+        - ownedPostCount
+        - interactedPostCount
+      properties:
+        ownedPostCount:
+          type: integer
+        interactedPostCount:
+          type: integer
+
+    MetaDataApplication:
+      type: "object"
+      required:
+        - appVersion
+      properties:
+        appVersion:
+          type: string
+
+    ErrorResponse:
+      type: "object"
+      required:
+        - statusCode
+        - errorText
+      properties:
+        statusCode:
+          type: string
+        errorText:
+          type: string
+
+    Report:
+      type: "object"
+      required:
+        - reason
+        - reportedByUserId
+        - reportedAt
+      properties:
+        reason:
+          type: string
+        reportedByUserId:
+          type: string
+        reportedAt:
+          type: string
