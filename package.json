@@ -1,0 +1,17 @@
+{
+  "name": "care_for_me_backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A Care for me Backend Node.js app using Express 4",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": "16.x"
+  },
+  "author": "Pushpika Wanniachchi",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
+}
