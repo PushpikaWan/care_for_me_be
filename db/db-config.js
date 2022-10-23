@@ -2,7 +2,7 @@ const {STATE_ACTIVE} = require("../util/constants");
 const MongoClient = require("mongodb").MongoClient;
 
 const connectionString = process.env.MONGODB_URI;
-const dbName = 'CARE_FOR_ME_DEV';
+const dbName =  process.env.MONGODB_NAME;
 let mongoClient = null;
 
 getDB = async () => {
