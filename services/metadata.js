@@ -37,7 +37,10 @@ module.exports.getUserPostMetaData = async (options) => {
 module.exports.getApplicationMetaData = async (options) => {
   return {
     status: 200,
-    data: {appVersion: process.env.MOBILE_APP_VERSION}
+    data: {
+      appVersion: process.env.MOBILE_APP_VERSION,
+      postShareBaseUrl: process.env.POST_SHARE_BASE_URL
+    }
   };
 };
 
