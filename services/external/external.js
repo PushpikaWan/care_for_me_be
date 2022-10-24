@@ -1,8 +1,9 @@
 const axios = require('axios');
 const FormData = require('form-data');
+const {IMAGE_API_KEY} = require("../../util/env-variables");
 
 module.exports.uploadImage = async (imageSrc) => {
-  const imageAPIKey = process.env.IMAGE_API_KEY;
+  const imageAPIKey = IMAGE_API_KEY;
   const data = new FormData();
   data.append('image', imageSrc);
   try {

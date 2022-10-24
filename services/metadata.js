@@ -1,6 +1,8 @@
 const common = require("../util/common");
 const {getPostCollection} = require("../db/db-config");
 const {STATE_ACTIVE} = require("../util/constants");
+const {MOBILE_APP_VERSION, POST_SHARE_BASE_URL} = require(
+    "../util/env-variables");
 
 /**
  * @param {Object} options
@@ -38,8 +40,8 @@ module.exports.getApplicationMetaData = async (options) => {
   return {
     status: 200,
     data: {
-      appVersion: process.env.MOBILE_APP_VERSION,
-      postShareBaseUrl: process.env.POST_SHARE_BASE_URL
+      appVersion: MOBILE_APP_VERSION,
+      postShareBaseUrl: POST_SHARE_BASE_URL
     }
   };
 };
