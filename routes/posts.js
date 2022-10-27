@@ -1,7 +1,7 @@
 const express = require('express');
 const posts = require('../services/posts');
 const {authenticateJWT} = require("../authorization/auth-helper");
-
+const cors = require('cors');
 const router = new express.Router();
 
 /**
@@ -42,7 +42,7 @@ router.post('/', authenticateJWT, async (req, res, next) => {
  *
  */
 //only keep this without authorization to access from public services - todo only allow within localhost
-router.get('/:postId', async (req, res, next) => {
+router.get('/:postId',  cors(), async (req, res, next) => {
   const options = {
     postId: req.params['postId']
   };
