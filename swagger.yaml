@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  version: 1.0.0
+  version: 1.1.0
   title: Care for Me APIs
   description: Care for Me APIs spec
 paths:
@@ -599,6 +599,40 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
+  '/location/post/{district}':
+    get:
+      operationId: getPostLocationData
+      parameters:
+        - in: path
+          name: district
+          schema:
+            type: string
+          required: true
+          description: district to search
+        - in: query
+          name: daysBack
+          required: true
+          schema:
+            type: integer
+          description: How many days back to calculate
+      tags:
+        - location
+
+      responses:
+        '200':
+          description: A successful response wih PostLocation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostLocation'
+
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
 components:
   schemas:
     Post:
@@ -759,4 +793,30 @@ components:
         reportedByUserId:
           type: string
         reportedAt:
+          type: string
+
+    PostLocation:
+      type: "object"
+      required:
+        - postId
+        - animalNeed
+        - animalType
+        - postImageUrl
+        - postDistrict
+        - postAddress
+        - postLocationLink
+      properties:
+        postId:
+          type: string
+        animalNeed:
+          type: string
+        animalType:
+          type: string
+        postImageUrl:
+          type: string
+        postDistrict:
+          type: string
+        postAddress:
+          type: string
+        postLocationLink:
           type: string

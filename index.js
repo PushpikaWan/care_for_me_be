@@ -80,3 +80,4 @@ console.debug('Server listening on port: ' + PORT);
 app.use('/user', require('./routes/user'));
 app.use('/posts', require('./routes/posts'));
 app.use('/metadata', require('./routes/metadata'));
+app.use('/location', require('./routes/location'));
