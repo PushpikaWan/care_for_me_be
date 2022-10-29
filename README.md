@@ -24,4 +24,9 @@ need to install gcloud sdk first
 
 - gcloud run deploy --source
 - deployed to -> https://careformebe-qprfrmgb5a-as.a.run.app/
-- 
+
+
+## client app config
+- build client application in https://github.com/PushpikaWan/care_for_me_fe
+- put that build folder inside client
+ 
