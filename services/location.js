@@ -1,7 +1,5 @@
 const {getPostCollection} = require("../db/db-config");
-const {ObjectId} = require("mongodb");
 const {STATE_ACTIVE} = require("../util/constants");
-const {convertIdBeforeSendingObject} = require("../util/common");
 const common = require("../util/common");
 /**
  * @param {Object} options
