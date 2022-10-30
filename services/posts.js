@@ -99,7 +99,7 @@ module.exports.updatePost = async (options) => {
         // "animalNeed": body.animalNeed,
         "district": body.district,
         "addressText": body.addressText,
-        "locationLink": body.locationLink,
+        "location": body.location,
         "description": body.description,
       })
     }
