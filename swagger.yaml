@@ -599,16 +599,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-  '/location/post/{district}':
+  '/location/post':
     get:
       operationId: getPostLocationData
       parameters:
-        - in: path
+        - in: query
           name: district
           schema:
             type: string
           required: true
-          description: district to search
+          description: district to search. 'all' will be fetched result of all district data
         - in: query
           name: daysBack
           required: true

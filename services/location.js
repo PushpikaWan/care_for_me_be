@@ -19,7 +19,7 @@ module.exports.getPostLocationData = async (options) => {
           createdAt: {$gte: daysBefore}
         }).toArray();
 
-    if (options.district != null && options.district.trim().length > 0) {
+    if (options.district != null && options.district.toLowerCase() !== 'all') {
       posts = await postCollection.find(
           {
             district: options.district,

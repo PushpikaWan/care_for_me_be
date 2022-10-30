@@ -8,9 +8,9 @@ const router = new express.Router();
 /**
  * 
  */
-router.get('/post/:district', authenticateJWT, async (req, res, next) => {
+router.get('/post', async (req, res, next) => {
   const options = {
-    district: req.params['district'],
+    district: req.query['district'],
     daysBack: req.query['daysBack']
   };
 
