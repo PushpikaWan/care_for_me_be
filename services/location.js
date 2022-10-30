@@ -50,6 +50,6 @@ function convertToPostLocation(post) {
     postImageUrl: post.imageUrl,
     postDistrict: post.district,
     postAddress: post.addressText,
-    postLocationLink: post.locationLink
+    Location: post.location
   }
 }

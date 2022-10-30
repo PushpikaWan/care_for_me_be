@@ -645,7 +645,6 @@ components:
         - animalNeed
         - district
         - addressText
-        - locationLink
         - description
         - createdAt
         - modifiedAt
@@ -667,8 +666,8 @@ components:
         addressText:
           type: string
           maxLength: 200
-        locationLink:
-          type: string
+        location:
+          $ref: "#/components/schemas/Location"
         description:
           type: string
           maxLength: 700
@@ -795,6 +794,19 @@ components:
         reportedAt:
           type: string
 
+    Location:
+      type: "object"
+      required:
+        - lat
+        - long
+      properties:
+        lat:
+          type: number
+          format: double
+        long:
+          type: number
+          format: double
+
     PostLocation:
       type: "object"
       required:
@@ -804,7 +816,6 @@ components:
         - postImageUrl
         - postDistrict
         - postAddress
-        - postLocationLink
       properties:
         postId:
           type: string
@@ -818,5 +829,5 @@ components:
           type: string
         postAddress:
           type: string
-        postLocationLink:
-          type: string
+        Location:
+          $ref: "#/components/schemas/Location"
