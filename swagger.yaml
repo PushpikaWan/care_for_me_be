@@ -829,5 +829,5 @@ components:
           type: string
         postAddress:
           type: string
-        Location:
+        location:
           $ref: "#/components/schemas/Location"
