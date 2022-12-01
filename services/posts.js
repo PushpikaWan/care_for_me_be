@@ -1,7 +1,7 @@
 const {getPostCollection, getPostCursor} = require("../db/db-config");
 const common = require("../util/common");
 const {ObjectId} = require("mongodb");
-const {STATE_ACTIVE, STATE_DELETE, STATE_PENDING} = require("../util/constants");
+const {STATE_ACTIVE, STATE_DELETE, STATE_PENDING, STATE_REJECTED} = require("../util/constants");
 const {convertIdBeforeSendingArray, convertIdBeforeSendingObject} = require(
     "../util/common");
 const {uploadImage} = require("./external/external");
@@ -273,7 +273,7 @@ module.exports.getPostsByUser = async (options) => {
     let findCursor = postCollection.find(
         {
           'userLite.userId': options.userId,
-          status: {$in: [STATE_ACTIVE, STATE_PENDING]}
+          status: {$in: [STATE_ACTIVE, STATE_PENDING, STATE_REJECTED]}
         }); //
 
     if (options.includeInteraction) {
