@@ -1,7 +1,7 @@
 const {getPostCollection, getPostCursor} = require("../db/db-config");
 const common = require("../util/common");
 const {ObjectId} = require("mongodb");
-const {STATE_ACTIVE, STATE_DELETE} = require("../util/constants");
+const {STATE_ACTIVE, STATE_DELETE, STATE_PENDING} = require("../util/constants");
 const {convertIdBeforeSendingArray, convertIdBeforeSendingObject} = require(
     "../util/common");
 const {uploadImage} = require("./external/external");
@@ -38,7 +38,7 @@ module.exports.savePost = async (options) => {
     const post = {
       ...options.body,
       imageUrl: uploadedImageUrl,
-      status: STATE_ACTIVE
+      status: STATE_PENDING
     }
     const inserted = await postCollection.insertOne(
         {
@@ -271,7 +271,10 @@ module.exports.getPostsByUser = async (options) => {
   try {
     const postCollection = await getPostCollection();
     let findCursor = postCollection.find(
-        {'userLite.userId': options.userId, status: STATE_ACTIVE});
+        {
+          'userLite.userId': options.userId,
+          status: {$in: [STATE_ACTIVE, STATE_PENDING]}
+        }); //
 
     if (options.includeInteraction) {
       findCursor = postCollection.find({
