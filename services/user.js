@@ -3,6 +3,7 @@ const common = require('../util/common');
 const {ObjectId} = require("mongodb");
 const {STATE_ACTIVE} = require("../util/constants");
 const {convertIdBeforeSendingObject} = require("../util/common");
+const {uploadImage} = require("./external/external");
 
 /**
  * @param {Object} options
@@ -12,14 +13,22 @@ const {convertIdBeforeSendingObject} = require("../util/common");
 module.exports.saveUser = async (options) => {
   try {
     const userCollection = await getUserCollection();
+    const uploadedImageUrl = await uploadImage(options.body.imageUrl);
+
     let countDocuments = await userCollection.countDocuments(
         {googleId: options.body.googleId},
         {limit: 1});
 
+    const user = {
+      ...options.body,
+      imageUrl: uploadedImageUrl,
+      status: STATE_ACTIVE
+    };
+
     if (countDocuments > 0) {
-      return await editUserByGoogleId(options);
+      return await editUserByGoogleId(user);
     }
-    const user = {...options.body, status: STATE_ACTIVE};
+
     const response = await userCollection.insertOne(
         common.getPreProcessedDataBeforeSave(user));
     const insertedUser = await this.getUser({userId: response.insertedId})
@@ -116,20 +125,18 @@ module.exports.editUser = async (options) => {
 
 /**
  * Do not expose this to external parties...
- * @param {Object} options
- * @param {String} options.userId user id
+ * @param {Object} user
  * @throws {Error}
  * @return {Promise}
  */
-editUserByGoogleId = async (options) => {
+editUserByGoogleId = async (user) => {
   try {
     const userCollection = await getUserCollection();
-    let body = options.body;
-    const filter = {googleId: body.googleId};
+    const filter = {googleId: user.googleId};
     const updatingDoc = {
       $set: common.getPreProcessedDataBeforeUpdate({
-        "name": body.name,
-        "imageUrl": body.imageUrl
+        "name": user.name,
+        "imageUrl": user.imageUrl
       })
     }
     let updateResult = await userCollection.findOneAndUpdate(filter,
