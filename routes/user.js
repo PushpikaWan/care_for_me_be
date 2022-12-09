@@ -54,4 +54,20 @@ router.put('/:userId', authenticateJWT, async (req, res, next) => {
   }
 });
 
+/**
+ *
+ */
+router.get('/find/:googleId', async (req, res, next) => {
+  const options = {
+    googleId: req.params['googleId']
+  };
+
+  try {
+    const result = await user.getUserByGoogleId(options);
+    res.status(result.status || 200).send(result.data);
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;

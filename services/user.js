@@ -61,6 +61,33 @@ module.exports.getUser = async (options) => {
 
 /**
  * @param {Object} options
+ * @param {String} options.googleId google id
+ * @throws {Error}
+ * @return {Promise}
+ */
+module.exports.getUserByGoogleId = async (options) => {
+  try {
+    const userCollection = await getUserCollection();
+    const user = await userCollection.findOne(
+        {googleId: new ObjectId(options.googleId), 'status': STATE_ACTIVE});
+    if (!user) {
+      return {
+        status: 204,
+        data: null
+      };
+    }
+    return {
+      status: 200,
+      data: convertIdBeforeSendingObject(user)
+    };
+  } catch (e) {
+    return common.getErrorResponse(500, e);
+  }
+
+};
+
+/**
+ * @param {Object} options
  * @param {String} options.userId user id
  * @throws {Error}
  * @return {Promise}
