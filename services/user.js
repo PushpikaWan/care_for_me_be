@@ -80,7 +80,7 @@ module.exports.getUserByGoogleId = async (options) => {
   try {
     const userCollection = await getUserCollection();
     const user = await userCollection.findOne(
-        {googleId: new ObjectId(options.googleId), 'status': STATE_ACTIVE});
+        {googleId: options.googleId, 'status': STATE_ACTIVE});
     if (!user) {
       return {
         status: 204,
