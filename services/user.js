@@ -18,7 +18,7 @@ module.exports.saveUser = async (options) => {
         await uploadImage(imageSource) : options.body.user.imageUrl;
 
     let countDocuments = await userCollection.countDocuments(
-        {googleId: options.body.googleId},
+        {googleId: options.body.user.googleId},
         {limit: 1});
 
     const user = {
