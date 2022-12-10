@@ -13,14 +13,16 @@ const {uploadImage} = require("./external/external");
 module.exports.saveUser = async (options) => {
   try {
     const userCollection = await getUserCollection();
-    const uploadedImageUrl = await uploadImage(options.body.imageUrl);
+    const imageSource = options.body.imageSource;
+    const uploadedImageUrl = (imageSource != null && imageSource) ?
+        await uploadImage(imageSource) : options.body.user.imageUrl;
 
     let countDocuments = await userCollection.countDocuments(
         {googleId: options.body.googleId},
         {limit: 1});
 
     const user = {
-      ...options.body,
+      ...options.body.user,
       imageUrl: uploadedImageUrl,
       status: STATE_ACTIVE
     };
@@ -102,25 +104,26 @@ module.exports.getUserByGoogleId = async (options) => {
  * @return {Promise}
  */
 module.exports.editUser = async (options) => {
-  try {
-    const userCollection = await getUserCollection();
-    let body = options.body;
-    const filter = {_id: new ObjectId(body.id)};
-    const updatingDoc = {
-      $set: common.getPreProcessedDataBeforeUpdate({
-        "name": body.name,
-        "imageUrl": body.imageUrl
-      })
-    }
-    let updateResult = await userCollection.findOneAndUpdate(filter,
-        updatingDoc, {returnDocument: "after"});
-    return {
-      status: 201,
-      data: convertIdBeforeSendingObject(updateResult.value)
-    };
-  } catch (e) {
-    return common.getErrorResponse(500, e);
-  }
+  //todo not using ... will use in the future
+  // try {
+  //   const userCollection = await getUserCollection();
+  //   let body = options.body;
+  //   const filter = {_id: new ObjectId(body.id)};
+  //   const updatingDoc = {
+  //     $set: common.getPreProcessedDataBeforeUpdate({
+  //       "name": body.name,
+  //       "imageUrl": body.imageUrl
+  //     })
+  //   }
+  //   let updateResult = await userCollection.findOneAndUpdate(filter,
+  //       updatingDoc, {returnDocument: "after"});
+  //   return {
+  //     status: 201,
+  //     data: convertIdBeforeSendingObject(updateResult.value)
+  //   };
+  // } catch (e) {
+  //   return common.getErrorResponse(500, e);
+  // }
 };
 
 /**

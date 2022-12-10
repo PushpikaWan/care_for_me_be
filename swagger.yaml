@@ -15,7 +15,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/UserEdit'
 
       responses:
         '201':
@@ -91,7 +91,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/UserEdit'
 
       responses:
         '201':
@@ -762,6 +762,16 @@ components:
         userName:
           type: string
         userImageUrl:
+          type: string
+
+    UserEdit:
+      type: "object"
+      required:
+        - user
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+        imageSource:
           type: string
 
     Comment:
