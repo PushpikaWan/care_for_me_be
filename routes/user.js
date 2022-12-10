@@ -57,7 +57,7 @@ router.put('/:userId', authenticateJWT, async (req, res, next) => {
 /**
  *
  */
-router.get('/find/:googleId', async (req, res, next) => {
+router.get('/find/:googleId', authenticateJWT, async (req, res, next) => {
   const options = {
     googleId: req.params['googleId']
   };
