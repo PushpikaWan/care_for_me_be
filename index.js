@@ -47,6 +47,22 @@ app.get("/care/:postId", async (req, res) => {
   }
 })
 
+//common meta data
+app.get("", async (req, res) => {
+  try {
+
+    const raw = fs.readFileSync(pathToIndex, 'utf8');
+    const pageTitle = "Care for Me"
+    const updated = raw.replace("__PAGE_META__", `<title>${pageTitle}</title>
+    <meta name="description" content= "Care for me Application"/>
+    <meta name="og:title" content=${pageTitle}/>
+    <meta name="og:image" content= "https://ibb.co/QP3C1gj"/>`)
+    res.send(updated)
+  } catch (ex) {
+    return res.status(500);
+  }
+})
+
 app.use(express.static(path.join(__dirname, "client/build")))
 // app.get("", (req, res) =>
 //     res.sendFile(path.join(__dirname, "client/build/index.html"))
